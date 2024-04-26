@@ -233,8 +233,8 @@ YT: @sov2020
                 "m_nBombSite":"C_PlantedC4",
                 "m_bBeingDefused":"C_PlantedC4",
                 "m_bBombDefused":"C_PlantedC4",
-                "m_bSpotted":"EntitySpottedState_t",
-                "m_entitySpottedState":"C_CSPlayerPawnBase"
+                #"m_bSpotted":"EntitySpottedState_t",
+                #"m_entitySpottedState":"C_CSPlayerPawnBase"
             }
             clientDll = requests.get("https://raw.githubusercontent.com/a2x/cs2-dumper/main/output/client.dll.json").json()
             [setattr(Offsets, k, clientDll["client.dll"]["classes"][clientDllName[k]]["fields"][k]) for k in clientDllName]
@@ -467,34 +467,37 @@ YT: @sov2020
                     center = width / 2
                     xStart = ent.headPos2d["x"] - center
                     yStart = ent.headPos2d["y"] - center / 2
-                    player = pm.r_int64(self.proc, self.mod + Offsets.dwLocalPlayerPawn)
-                    entityspotted = pm.r_bool(self.proc, player + (Offsets.m_entitySpottedState + Offsets.m_bSpotted))
+
+                    #m_entitySpottedState = 0x1698
+
+                    #player = pm.r_int64(self.proc, self.mod + Offsets.dwLocalPlayerPawn)
+                    #entityspotted = pm.r_bool(self.proc, player + (m_entitySpottedState + Offsets.m_bSpotted))
 
                     if self.config["esp"]["box"]:
-                        if self.config["esp"]["showvisible"]:
-                            if entityspotted == False:
-                                pm.draw_rectangle_rounded_lines(
-                                    xStart,
-                                    yStart,
-                                    width,
-                                    head + center / 2,
-                                    self.config["esp"]["boxRounding"],
-                                    1,
-                                    pm.get_color("red"),
-                                    1.2,
-                                )
-                            elif entityspotted == True:
-                                pm.draw_rectangle_rounded_lines(
-                                    xStart,
-                                    yStart,
-                                    width,
-                                    head + center / 2,
-                                    self.config["esp"]["boxRounding"],
-                                    1,
-                                    self.espColor,
-                                    1.2,
-                                )
-                        else:
+                        #if self.config["esp"]["showvisible"]:
+                            #if entityspotted == False:
+                            #    pm.draw_rectangle_rounded_lines(
+                            #        xStart,
+                            #        yStart,
+                            #        width,
+                            #        head + center / 2,
+                            #        self.config["esp"]["boxRounding"],
+                            #        1,
+                            #        pm.get_color("red"),
+                            #        1.2,
+                            #    )
+                            #elif entityspotted == True:
+                            #    pm.draw_rectangle_rounded_lines(
+                            #        xStart,
+                            #        yStart,
+                            #        width,
+                            #        head + center / 2,
+                            #        self.config["esp"]["boxRounding"],
+                            #        1,
+                            #        self.espColor,
+                            #        1.2,
+                            #    )
+                        #else:
                             pm.draw_rectangle_rounded_lines(
                                     xStart,
                                     yStart,
