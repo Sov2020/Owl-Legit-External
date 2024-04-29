@@ -1,4 +1,4 @@
-version = "0.2.6.2"
+version = "0.2.6.4"
 title = f"[v{version}] Owl-Legit"
 
 import win32gui, time, json, os, threading, psutil, win32process, win32api, win32con, random, requests, win32console, ctypes, sys, datetime, keyboard, webbrowser # type: ignore
@@ -647,25 +647,25 @@ YT: @sov2020
         pm.write_int(dwLocalplayerController + Offsets.m_iDesiredFOV, value) #второстепенный оффсет который прибавляется к главному, после запятой значение которое мы можем менять.
 
     def bhopio(self):
-        pass
-    #    pm = Pymem("cs2.exe")
-    #   client = process.module_from_name(pm.process_handle, "client.dll")
+    #    pass
+        pm = Pymem("cs2.exe")
+        client = process.module_from_name(pm.process_handle, "client.dll")
 
-    #    onGround = 65665
-    #    onGround_with_ctrl = 65667
+        onGround = 65665
+        onGround_with_ctrl = 65667
 
-    #    LocalPlayer= pm.read_longlong(client.lpBaseOfDll + Offsets.dwLocalPlayerPawn)
+        LocalPlayer= pm.read_longlong(client.lpBaseOfDll + Offsets.dwLocalPlayerPawn)
 
-    #    if self.config["bhopio"]["bhop"]:
-    #            while True:
-    #                if not self.config["bhopio"]["bhop"]: break
-    #                ingroundcheck = pm.read_int(LocalPlayer + Offsets.m_fFlags)
+        if self.config["bhopio"]["bhop"]:
+                while True:
+                    if not self.config["bhopio"]["bhop"]: break
+                    ingroundcheck = pm.read_int(LocalPlayer + Offsets.m_fFlags)
 
-    #                if space pressed we can do it
-    #                if keyboard.is_pressed("space"):
-    #                    if ingroundcheck == onGround or ingroundcheck == onGround_with_ctrl:
-    #                        keyboard.press_and_release("space")
-    #                        time.sleep(0.02)
+                    #if space pressed we can do it
+                    if keyboard.is_pressed("space"):
+                        if ingroundcheck == onGround or ingroundcheck == onGround_with_ctrl:
+                            keyboard.press_and_release("space")
+                            time.sleep(0.03)
 
     def GranadePoz(self):
         #return
@@ -681,16 +681,16 @@ YT: @sov2020
         address = client.lpBaseOfDll + search(location, clientBytes).start()
         pm.write_bytes(address, patch, len(patch))
                 
-    def noFlash(self):
-        try:
-            (flashAddress,) = pm.aob_scan_module(self.proc, pm.get_module(self.proc, "client.dll")["name"], "0f 83 ?? ?? ?? ?? 48 8b 1d ?? ?? ?? ?? 40 38 73")
-        except:
-            (flashAddress,) = pm.aob_scan_module(self.proc, pm.get_module(self.proc, "client.dll")["name"], "0f 82 ?? ?? ?? ?? 48 8b 1d ?? ?? ?? ?? 40 38 73")
-        
-        if self.config["misc"]["noFlash"]:
-            pm.w_bytes(self.proc, flashAddress, b"\x0f\x82")
-        else:
-            pm.w_bytes(self.proc, flashAddress, b"\x0f\x83")
+    #def noFlash(self):
+    #    try:
+    #        (flashAddress,) = pm.aob_scan_module(self.proc, pm.get_module(self.proc, "client.dll")["name"], "0f 83 ?? ?? ?? ?? 48 8b 1d ?? ?? ?? ?? 40 38 73")
+    #    except:
+    #        (flashAddress,) = pm.aob_scan_module(self.proc, pm.get_module(self.proc, "client.dll")["name"], "0f 82 ?? ?? ?? ?? 48 8b 1d ?? ?? ?? ?? 40 38 73")
+    #    
+    #    if self.config["misc"]["noFlash"]:
+    #        pm.w_bytes(self.proc, flashAddress, b"\x0f\x82")
+    #    else:
+    #        pm.w_bytes(self.proc, flashAddress, b"\x0f\x83")
 
     def BombHelp(self):
         #dwPlantedC4 = 26376856
@@ -961,7 +961,7 @@ if __name__ == "__main__":
 
                 with dpg.group(horizontal=True):
                     checkboxEspBox= dpg.add_checkbox(label="Box", default_value=panosdiosClass.config["esp"]["box"], callback=toggleEspBox)
-                    checkboxEspBox= dpg.add_checkbox(label="Show visible", default_value=panosdiosClass.config["esp"]["showvisible"], callback=toggleEspShowVsible)
+                    #checkboxEspBoxVisible= dpg.add_checkbox(label="Show visible", default_value=panosdiosClass.config["esp"]["showvisible"], callback=toggleEspShowVsible)
                     checkboxEspBackground = dpg.add_checkbox(label="Background", default_value=panosdiosClass.config["esp"]["boxBackground"], callback=toggleEspBoxBackground)
 
                 with dpg.group(horizontal=True):
@@ -1026,9 +1026,9 @@ if __name__ == "__main__":
             with dpg.tab(label="Detected"):
                 dpg.add_spacer(width=75)
                 
-                with dpg.group(horizontal=True):
-                    checkboxNoFlash = dpg.add_checkbox(label="NoFlash", default_value=panosdiosClass.config["misc"]["noFlash"], callback=toggleNoFlash)
-                    dpg.add_text(default_value="/ DETECTED*")
+                #with dpg.group(horizontal=True):
+                #    checkboxNoFlash = dpg.add_checkbox(label="NoFlash", default_value=panosdiosClass.config["misc"]["noFlash"], callback=toggleNoFlash)
+                #    dpg.add_text(default_value="/ DETECTED*")
 
                 with dpg.group(horizontal=True):
                     checkboxGranadePoz = dpg.add_checkbox(label="Granade Preview", default_value=panosdiosClass.config["misc"]["GranadePoz"], callback=toggleBunnyHop)
